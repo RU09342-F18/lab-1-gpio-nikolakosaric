@@ -83,9 +83,10 @@ int main(void)
     {
         P1OUT ^= BIT0;                      // Toggle P1.0 using exclusive-OR
         int i;
-        for (i=0; i<3; i++){
-            __delay_cycles(100000);             // Delay for 100000*(1/MCLK)=0.1s
-            P2OUT ^= BIT0;                      // Toggle P2.0 using exclusive-OR
+        for (i=0; i<3; i++){                // Utilizes for loop to toggle led2 3 times for every
+                                            // one time led1 is toggled
+            __delay_cycles(100000);         // Delay for 100000*(1/MCLK)=0.1s
+            P2OUT ^= BIT0;                  // Toggle P2.0 using exclusive-OR
         }
      }
 

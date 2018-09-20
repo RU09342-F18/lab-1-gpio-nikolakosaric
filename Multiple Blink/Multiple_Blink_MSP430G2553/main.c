@@ -72,15 +72,16 @@ int main(void)
   IE1 |= WDTIE;                             // Enable WDT interrupt
   P1DIR |= BIT0;                            // Set P1.0 to output direction
 
-  P1DIR |= BIT6;                          // Set P2.0 to output direction
+  P1DIR |= BIT6;                            // Set P1.6 to output direction
 
   while(1)
   {
-      P1OUT ^= BIT0;                      // Toggle P1.0 using exclusive-OR
+      P1OUT ^= BIT0;                        // Toggle P1.0 using exclusive-OR
       int i;
-      for (i=0; i<3; i++){
-          __delay_cycles(100000);             // Delay for 100000*(1/MCLK)=0.1s
-          P1OUT ^= BIT6;                      // Toggle P2.0 using exclusive-OR
+      for (i=0; i<3; i++){                  // Utilizes for loop to toggle led2 3 times for every
+                                            // one time led1 is toggled
+          __delay_cycles(100000);           // Delay for 100000*(1/MCLK)=0.1s
+          P1OUT ^= BIT6;                    // Toggle P2.0 using exclusive-OR
       }
    }
 

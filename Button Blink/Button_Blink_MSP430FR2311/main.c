@@ -79,20 +79,17 @@ int main(void)
     P1OUT &= ~BIT0;                         // Clear P1.0 output latch for a defined power-on state
     P1DIR |= BIT0;                          // Set P1.0 to output direction
 
-    P1DIR &= ~BIT1;
-    P1OUT |= BIT1;                         // Configure P1.1 as pulled-down
+    P1DIR &= ~BIT1;                         // Set P1.1 to input direction
+    P1OUT |= BIT1;                          // Configure P1.1 as pulled-down
     P1REN |= BIT1;                          // P1.1 pull-up register enable
-
-    // Disable the GPIO power-on default high-impedance mode
-    // to activate previously configured port settings
 
     while(1)
     {
-        if (P1IN & BIT1){
-            P1OUT &= ~BIT0;
+        if (P1IN & BIT1){                   // If P1.1 reads high
+            P1OUT &= ~BIT0;                 // P1.0 enable
         }
-        else{
-            P1OUT |= BIT0;                      // P1.0 = toggle
+        else{                               // Else
+            P1OUT |= BIT0;                  // P1.0 = disable
         }
     }
 }
