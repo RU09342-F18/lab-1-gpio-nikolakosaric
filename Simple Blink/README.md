@@ -1,26 +1,31 @@
 # Simple Blink
-For starters, you will need to blink one of the on-board LED's at a particular rate. It is up to you to determine what rate you want to blink it at, however it has to be symmetrical (50% Duty Cycle), meaning equal times on and off. You should attempt multiple different speeds before moving on to the next part of the lab.
 
-## YOU NEED TO CREATE THE FOLLOWING FOLDERS
-* MSP430G2553
-* MSP(FILL IN WHAT BOARD YOU ARE USING)
+The following code blinks an onboard LED on an MSP430G2553 and MSP430FR2311 at the reigster level.
 
-## How to not damage your processor
-Remember that your microprocessors are not hooked up to a nuclear power plant and they can only provide a finite amount of current and power to your attached devices. For each of your processors you should see what the maximum supply current is for the digital output pins and note it in your designs. Diodes are an interesting device where the V-I curve becomes almost a short circuit after only a couple volts. If you have a diode biased to operate at say 1 volt above its turn on voltage, you are going to be drawing quite a bit of amperage.
+## Step 1: Configure the Watchdog Timer
 
-Before you actually begin this lab, take the time to mess around with the simulation below and understand what the importance of the series resistance is in the design. What does the resistance prevent from happening? Does having this resistance impact the performance of the LED?
+The watchdog timer is a preventative measure to ensure that the microcontroller is not left in a state where it cannot function, such as an infinite loop. It works by resetting the processor if the processor does not acknowledge it. In order to ignore the watchdog timer, the watch dog control register is set to WDTPW ored with WDTHOLD. This results in the watchdog timer being disabled. 
 
-<a href="http://everycircuit.com/circuit/5180823226810368">LED Current - EveryCircuit</a><br>
-<iframe width="560" height="360" src="http://everycircuit.com/embed/5180823226810368" frameborder="0"></iframe>
+## Step 2: Configure Pin #.# to the Output Direction
 
-## README
-Remember to replace this README with your README once you are ready to submit. I would recommend either making a copy of this file or taking a screen shot. There might be a copy of all of these README's in a folder on the top level depending on the exercise.
+In order to drive an LED, the register must be set to output. This is done by setting the direction register value to 1 by orring it with a 1.
 
-## Extra Work
-Since this is so basic, there are a few things which might be interesting to implement.
+#### G2553: 
 
-### UART Control: Single Character
-For starters, it would be interesting to tie in some of the UART code that was used before into this project. You might want to have the speed of the blinking controlled by a character sent over UART. For example, 's' could be a slow setting, 'm' could be medium speed, 'f' could be fast, and 'o' could be off.
+On the G2553, P1.0 is selected as the output pin as it is connected to the onboard LED.
 
-### UART Control: Rate Number
-Instead of depending on a character, what if we wanted to send a blinking period in milliseconds? So instead of 's', you could send something like '100' which corresponds to a 100 millisecond delay between the time the LED turns on again. Before you decide to tackle this, I would take a look at using a logic analyzer to see exactly what your computer is sending to your microprocessor. Also remember that the code previously provided will only service the UART Buffer one character at a time.
+#### FR2311: 
+
+On the FR2311, P1.0 is selected as the output pin as it is connected to the onboard LED.
+
+## Step 3: Infinite Loop
+
+In order to make the continue the functionality, the remainder of the code will be nested in a infinite loop. This is done by utilizing a while loop with the condition of 1 or true. Every time the while loop reitterates, it checks the condition, and sees a true, thus continuing the loop. This is a reason why the watchdog timer is disabled.
+
+## Step 4: Toggle LED State
+
+In order to toggle the state of the LED, the pinout register value is xored with a 1 in order to changs its state within every itteration of the while loop. 
+
+## Step 5: Delay
+
+In order to make the LED blink, a delay must be utilized so that the toggling of the LED can be visible. For this a delay cycle of 100000, resulting in a delay of 100 milliseconds.
