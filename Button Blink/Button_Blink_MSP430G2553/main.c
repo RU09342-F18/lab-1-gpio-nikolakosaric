@@ -82,7 +82,7 @@ int main(void)
               P1OUT &= ~BIT0;
           }
           else{
-              P1OUT |= BIT0;                      // P1.0 = toggle
+              P1OUT |= BIT0;
           }
       }
   }
