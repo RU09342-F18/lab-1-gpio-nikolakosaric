@@ -72,9 +72,9 @@ int main(void)
   IE1 |= WDTIE;                             // Enable WDT interrupt
   P1DIR |= BIT0;                            // Set P1.0 to output direction
 
-  P1DIR &= ~BIT3;                           // Set P1.1 to input direction
-  P1OUT |= BIT3;                            // Configure P1.1 as pulled-down
-  P1REN |= BIT3;                            // P1.1 pull-up register enable
+  P1DIR &= ~BIT3;                           // Set P1.3 to input direction
+  P1OUT |= BIT3;                            // Configure P1.3 as pulled-down
+  P1REN |= BIT3;                            // P1.3 pull-up register enable
 
   while(1)
       {
